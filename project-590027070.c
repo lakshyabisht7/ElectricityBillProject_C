@@ -12,6 +12,7 @@ as per the Current Tariff and all Other Charges applicable for Residential conne
 #include <stdlib.h>
 #include <string.h>
 
+// Structure to store customer details and bill components 
 typedef struct 
 {
     int id;
@@ -28,7 +29,7 @@ typedef struct
 Customer customers[100]; 
 int count = 0;           
 
-// Bill Calculation Logic
+// Calculates bill breakdown and total bill
 float calculateBill(float units, float load, int latePayment, Customer *c) 
 {
     float energyCharge = 0, totalBill = 0, surcharges = 0, fixedCharge = 0, duty=0;
@@ -41,7 +42,7 @@ float calculateBill(float units, float load, int latePayment, Customer *c)
     else 
     fixedCharge = 100 * load; 
 
-    //Energy charges
+    // Slab-wise energy charge calculation
     if (units <= 100) 
     {
         energyCharge = units * 3.65;
@@ -65,14 +66,14 @@ float calculateBill(float units, float load, int latePayment, Customer *c)
     // Surcharges  Rs. 0.10 per unit
     surcharges = units * 0.10; 
 
-    // Total bill 
+    // Sum of all components = Total bill 
     totalBill = energyCharge + fixedCharge + duty + surcharges ;
 
-    // Late payment fee 1.25%
+    // Late payment fee 1.25% (if applicable)
     if (latePayment == 1)
     totalBill += totalBill * 0.0125;
 
-    //Store in struct
+    // Storing all calculated components back in structure
     c->energyCharge = energyCharge;
     c->fixedCharge = fixedCharge;
     c->duty = duty;
@@ -81,3 +82,27 @@ float calculateBill(float units, float load, int latePayment, Customer *c)
 
     return totalBill;
 }
+
+// Input new customer details and billing details
+void addCustomer() 
+{
+    Customer c;
+    int latePayment;
+
+    if (count >= 100) // Check storage limit
+    {
+        printf("Adding customer unsuccessful. Customer limit reached.\n");
+        return;
+    }
+    
+    printf("Enter Customer ID: ");
+    scanf("%d", &c.id);
+    for(int i = 0; i < count; i++)
+    {   
+        // Duplicate ID check
+        if(customers[i].id == c.id)
+        {
+            printf("Customer ID already exists.\n");
+            return;
+        }
+    }
