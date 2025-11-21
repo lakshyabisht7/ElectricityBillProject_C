@@ -9,3 +9,22 @@ Apart from calculating slab-wise energy charges, the program also stores custome
 a formatted bill. File handling is used so that customer records remain saved even after the program is closed.
 
 */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+//Structure to store customer details and bill components
+typedef struct 
+{
+    int id;
+    char name[50];
+    float units;
+    float load;
+    float energyCharge;
+    float fixedCharge;
+    float duty;
+    float surcharge;
+    float totalBill;
+} Customer;
+
