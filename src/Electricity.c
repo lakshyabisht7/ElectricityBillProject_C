@@ -108,4 +108,10 @@ void addCustomer()
             return;
         }
     }
+    
+    printf("Enter Customer Name: ");
+    getchar(); 
+    fgets(c.name, sizeof(c.name), stdin);
+    c.name[strcspn(c.name,"\n")] = '\0';
+
 }
