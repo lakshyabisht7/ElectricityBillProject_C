@@ -96,3 +96,16 @@ void addCustomer()
         printf("Adding customer unsuccessful. Customer limit reached.\n");
         return;
     }
+    
+    printf("Enter Customer ID: ");
+    scanf("%d", &c.id);
+    for(int i = 0; i < count; i++)
+    {   
+        // Duplicate ID check
+        if(customers[i].id == c.id)
+        {
+            printf("Customer ID already exists.\n");
+            return;
+        }
+    }
+}
