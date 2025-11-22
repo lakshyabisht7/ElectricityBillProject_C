@@ -43,3 +43,21 @@ float calculateBill(float units, float load, int latePayment, Customer *c)
     fixedCharge = 85.0 * load; 
     else 
     fixedCharge = 100 * load;
+
+    //Slab-wise energy charge calculation
+    if (units <= 100) 
+    {
+        energyCharge = units * 3.65;
+    } 
+    else if (units <= 200) 
+    {
+        energyCharge = (100 * 3.65) + ((units - 100) * 5.25);
+    } 
+    else if (units <= 400) 
+    {
+        energyCharge = (100 * 3.65) + (100 * 5.25) + ((units - 200) * 7.15);
+    } 
+    else 
+    {
+        energyCharge = (100 * 3.65) + (100 * 5.25) + (200 * 7.15) + ((units - 400) * 7.80);
+    }
