@@ -74,3 +74,13 @@ float calculateBill(float units, float load, int latePayment, Customer *c)
     // Late payment fee 1.25% (if applicable)
     if (latePayment == 1)
     totalBill += totalBill * 0.0125;
+
+    // Store all calculated components back in structure
+    c->energyCharge = energyCharge;
+    c->fixedCharge = fixedCharge;
+    c->duty = duty;
+    c->surcharge = surcharges;
+    c->totalBill = totalBill;
+
+    return totalBill;
+}
