@@ -61,3 +61,16 @@ float calculateBill(float units, float load, int latePayment, Customer *c)
     {
         energyCharge = (100 * 3.65) + (100 * 5.25) + (200 * 7.15) + ((units - 400) * 7.80);
     }
+
+    // Duty charges 15% of energy charges
+    duty = energyCharge * 0.15; 
+
+    // Surcharges  Rs. 0.10 per unit
+    surcharges = units * 0.10; 
+
+    // Sum of all components = Total bill 
+    totalBill = energyCharge + fixedCharge + duty + surcharges ;
+
+    // Late payment fee 1.25% (if applicable)
+    if (latePayment == 1)
+    totalBill += totalBill * 0.0125;
