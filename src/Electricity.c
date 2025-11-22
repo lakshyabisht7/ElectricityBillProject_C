@@ -84,3 +84,15 @@ float calculateBill(float units, float load, int latePayment, Customer *c)
 
     return totalBill;
 }
+
+// Input new customer details and billing details
+void addCustomer() 
+{
+    Customer c;
+    int latePayment;
+
+    if (count >= 100) // Check storage limit
+    {
+        printf("Adding customer unsuccessful. Customer limit reached.\n");
+        return;
+    }
