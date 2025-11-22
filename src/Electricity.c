@@ -28,3 +28,18 @@ typedef struct
     float totalBill;
 } Customer;
 
+Customer customers[100]; 
+int count = 0;           
+
+//Calculates bill breakdown and total bill
+float calculateBill(float units, float load, int latePayment, Customer *c) 
+{
+    float energyCharge = 0, totalBill = 0, surcharges = 0, fixedCharge = 0, duty=0;
+
+    // Fixed charge based on load capacity
+    if (load <= 1)
+    fixedCharge = 75.0 * load;
+    else if (load <= 4)
+    fixedCharge = 85.0 * load; 
+    else 
+    fixedCharge = 100 * load;
