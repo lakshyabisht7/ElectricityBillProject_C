@@ -114,4 +114,13 @@ void addCustomer()
     fgets(c.name, sizeof(c.name), stdin);
     c.name[strcspn(c.name,"\n")] = '\0';
 
+    printf("Enter Units Consumed: ");
+    scanf("%f", &c.units);
+    if (c.units < 0) 
+    {
+        printf("Invalid input. Units cannot be less than zero.\n");
+        return;
+    }
+
+
 }
