@@ -122,5 +122,12 @@ void addCustomer()
         return;
     }
 
-
+    printf("Enter Load Capacity (in kW): ");
+    scanf("%f", &c.load);
+    if (c.load <= 0) 
+    {
+        printf("Invalid input. Load capacity must be greater than zero.\n");
+        return;
+    }
+    
 }
