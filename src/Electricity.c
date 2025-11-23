@@ -128,6 +128,13 @@ void addCustomer()
     {
         printf("Invalid input. Load capacity must be greater than zero.\n");
         return;
+
+    printf("Is it late payment? (1=yes, 0=no): ");
+    scanf("%d", &latePayment);
+    if (latePayment != 0 && latePayment != 1) 
+    {
+        printf("Invalid input. Please enter 1(late payment) or not late(0).\n");
+        return;
     }
-    
+
 }
