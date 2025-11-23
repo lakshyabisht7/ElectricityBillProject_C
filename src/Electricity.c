@@ -128,6 +128,7 @@ void addCustomer()
     {
         printf("Invalid input. Load capacity must be greater than zero.\n");
         return;
+    }
 
     printf("Is it late payment? (1=yes, 0=no): ");
     scanf("%d", &latePayment);
@@ -137,4 +138,10 @@ void addCustomer()
         return;
     }
 
+    calculateBill(c.units, c.load, latePayment, &c);
+
+    customers[count] = c; 
+    count++;
+
+    printf("Customer added successfully.\n");
 }
