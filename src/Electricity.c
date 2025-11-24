@@ -152,5 +152,23 @@ void searchByID()
     int id, found=0;
     printf("Enter Customer ID to search: ");
     scanf("%d", &id);
+    
+    for(int i=0; i<count; i++)
+    {
+        if (customers[i].id == id)
+        {
+            printf("\nCustomer Found:\n");
+            printf("ID: %d\n", customers[i].id);
+            printf("Name: %s\n", customers[i].name);
+            printf("Units: %.2f\n", customers[i].units);
+            printf("Load: %.2f kW\n", customers[i].load);
+            printf("Total Bill: INR %.2f\n", customers[i].totalBill);
+            found=1;
+            break;
+        }
+    }
+    
+    if (found == 0)
+    printf("Customer not found.\n");
 }
                     
