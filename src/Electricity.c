@@ -145,3 +145,12 @@ void addCustomer()
 
     printf("Customer added successfully.\n");
 }
+
+//Search customer records by ID
+void searchByID()
+{
+    int id, found=0;
+    printf("Enter Customer ID to search: ");
+    scanf("%d", &id);
+}
+                    
