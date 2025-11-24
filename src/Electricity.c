@@ -182,4 +182,22 @@ void searchByName()
     getchar();
     fgets(name, sizeof(name), stdin);
     name[strcspn(name, "\n")] = '\0';
+
+    for (int i=0; i<count; i++)
+    {
+        if (strcmp(customers[i].name, name) == 0)
+        {
+            printf("\nCustomer Found:\n");
+            printf("ID: %d\n", customers[i].id);
+            printf("Name: %s\n", customers[i].name);
+            printf("Units: %.2f\n", customers[i].units);
+            printf("Load: %.2f kW\n", customers[i].load);
+            printf("Total Bill: INR %.2f\n", customers[i].totalBill);
+
+            found=1;
+        }
+    }
+    
+    if (found == 0)
+    printf("No customer found with the entered name.\n");
 }
