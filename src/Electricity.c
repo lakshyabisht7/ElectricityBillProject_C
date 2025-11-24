@@ -201,3 +201,24 @@ void searchByName()
     if (found == 0)
     printf("No customer found with the entered name.\n");
 }
+
+//Display formatted electricity bill
+void generateReceipt()
+{
+    int id, found = 0;
+    printf("Enter Customer ID to generate receipt:\n");
+    scanf("%d", &id);
+
+    for (int i = 0; i < count; i++)
+    {
+        if (customers[i].id == id)
+        {
+            printf("---------------------------------------------\n");
+            printf("  UTTARAKHAND POWER CORPORATION LTD. (UPCL) \n\n");
+            printf("Customer ID   : %d\n", customers[i].id);
+            printf("Customer Name : %s\n", customers[i].name);
+            printf("Connected Load: %.2f kW\n", customers[i].load);
+            printf("Units Consumed: %.2f units\n", customers[i].units);
+        }
+    }
+}
