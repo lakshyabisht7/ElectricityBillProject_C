@@ -167,8 +167,19 @@ void searchByID()
             break;
         }
     }
-    
+
     if (found == 0)
     printf("Customer not found.\n");
 }
-                    
+
+//Search customer records by name 
+void searchByName()
+{
+    char name[50];
+    int found = 0;
+
+    printf("Enter Customer Name to search: ");
+    getchar();
+    fgets(name, sizeof(name), stdin);
+    name[strcspn(name, "\n")] = '\0';
+}
