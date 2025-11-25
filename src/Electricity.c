@@ -31,6 +31,13 @@ typedef struct
 Customer customers[100]; 
 int count = 0;           
 
+// Save customer details and bill records to file
+void saveToFile()
+{
+    FILE *fp=fopen("customers.dat","wb");
+    
+}
+
 //Calculates bill breakdown and total bill
 float calculateBill(float units, float load, int latePayment, Customer *c) 
 {
