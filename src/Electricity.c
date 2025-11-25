@@ -35,6 +35,11 @@ int count = 0;
 void saveToFile()
 {
     FILE *fp=fopen("customers.dat","wb");
+    if(fp == NULL)
+    {
+        printf("Error while saving data.\n");
+        return;
+    }
     
 }
 
