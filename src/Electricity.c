@@ -40,7 +40,11 @@ void saveToFile()
         printf("Error while saving data.\n");
         return;
     }
-    
+
+    fwrite(&count, sizeof(int), 1, fp);
+    fwrite(customers, sizeof(Customer), count, fp);
+
+    fclose(fp);
 }
 
 //Calculates bill breakdown and total bill
