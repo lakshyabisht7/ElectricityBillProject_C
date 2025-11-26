@@ -47,6 +47,13 @@ void saveToFile()
     fclose(fp);
 }
 
+// Load data from file when program starts
+void loadFromFile()
+{
+    FILE *fp = fopen("customers.dat","rb");
+    
+}
+
 //Calculates bill breakdown and total bill
 float calculateBill(float units, float load, int latePayment, Customer *c) 
 {
