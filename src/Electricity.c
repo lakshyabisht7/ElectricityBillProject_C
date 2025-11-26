@@ -40,12 +40,12 @@ void saveToFile()
         printf("Error while saving data.\n");
         return;
     }
-
     fwrite(&count, sizeof(int), 1, fp);
     fwrite(customers, sizeof(Customer), count, fp);
 
     fclose(fp);
 }
+
 
 // Load data from file when program starts
 void loadFromFile()
@@ -55,9 +55,12 @@ void loadFromFile()
     {
         return;
     }
-        
-    
+    fread(&count, sizeof(int), 1, fp);
+    fread(customers, sizeof(Customer), count, fp);
+
+    fclose(fp);
 }
+
 
 //Calculates bill breakdown and total bill
 float calculateBill(float units, float load, int latePayment, Customer *c) 
@@ -112,6 +115,7 @@ float calculateBill(float units, float load, int latePayment, Customer *c)
 
     return totalBill;
 }
+
 
 // Input new customer details and billing details
 void addCustomer() 
@@ -174,6 +178,7 @@ void addCustomer()
     printf("Customer added successfully.\n");
 }
 
+
 //Search customer records by ID
 void searchByID()
 {
@@ -199,6 +204,7 @@ void searchByID()
     if (found == 0)
     printf("Customer not found.\n");
 }
+
 
 //Search customer records by name 
 void searchByName()
@@ -229,6 +235,7 @@ void searchByName()
     if (found == 0)
     printf("No customer found with the entered name.\n");
 }
+
 
 //Display formatted electricity bill
 void generateReceipt()
