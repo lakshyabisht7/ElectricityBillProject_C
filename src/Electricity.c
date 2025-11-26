@@ -51,6 +51,11 @@ void saveToFile()
 void loadFromFile()
 {
     FILE *fp = fopen("customers.dat","rb");
+    if(fp == NULL)
+    {
+        return;
+    }
+        
     
 }
 
