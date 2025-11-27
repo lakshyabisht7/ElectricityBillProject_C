@@ -250,6 +250,17 @@ void generateReceipt()
             printf("Customer Name : %s\n", customers[i].name);
             printf("Connected Load: %.2f kW\n", customers[i].load);
             printf("Units Consumed: %.2f units\n", customers[i].units);
+            printf("\n  Bill Breakdown\n");
+            printf("Energy Charge : INR %.2f\n", customers[i].energyCharge);
+            printf("Fixed Charge  : INR %.2f\n", customers[i].fixedCharge);
+            printf("Duty (15%%)    : INR %.2f\n", customers[i].duty);
+            printf("Surcharge     : INR %.2f\n", customers[i].surcharge);
+            printf("---------------------------------------------\n");
+            printf("TOTAL BILL    : INR %.2f\n", customers[i].totalBill);
+            printf("---------------------------------------------\n");
+
+            found=1;
+            break;
         }
     }
 }
