@@ -264,3 +264,11 @@ void generateReceipt()
         }
     }
 }
+
+// Main menu for users to interact with available options 
+int main() 
+{
+    loadFromFile(); // Load customer data from file
+
+    int choice;
+}
