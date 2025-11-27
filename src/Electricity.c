@@ -29,9 +29,9 @@ typedef struct
 } Customer;
 
 Customer customers[100]; 
-int count = 0;           
+int count=0;           
 
-// Save customer details and bill records to file
+//Save customer details and bill records to file
 void saveToFile()
 {
     FILE *fp=fopen("customers.dat","wb");
@@ -45,7 +45,6 @@ void saveToFile()
 
     fclose(fp);
 }
-
 
 // Load data from file when program starts
 void loadFromFile()
@@ -61,30 +60,29 @@ void loadFromFile()
     fclose(fp);
 }
 
-
 //Calculates bill breakdown and total bill
 float calculateBill(float units, float load, int latePayment, Customer *c) 
 {
-    float energyCharge = 0, totalBill = 0, surcharges = 0, fixedCharge = 0, duty=0;
+    float energyCharge=0, totalBill=0, surcharges=0, fixedCharge=0, duty=0;
 
-    // Fixed charge based on load capacity
-    if (load <= 1)
+    //Fixed charge based on load capacity
+    if(load <= 1)
     fixedCharge = 75.0 * load;
-    else if (load <= 4)
+    else if(load <= 4)
     fixedCharge = 85.0 * load; 
     else 
     fixedCharge = 100 * load;
 
     //Slab-wise energy charge calculation
-    if (units <= 100) 
+    if(units <= 100) 
     {
         energyCharge = units * 3.65;
     } 
-    else if (units <= 200) 
+    else if(units <= 200) 
     {
         energyCharge = (100 * 3.65) + ((units - 100) * 5.25);
     } 
-    else if (units <= 400) 
+    else if(units <= 400) 
     {
         energyCharge = (100 * 3.65) + (100 * 5.25) + ((units - 200) * 7.15);
     } 
@@ -93,20 +91,20 @@ float calculateBill(float units, float load, int latePayment, Customer *c)
         energyCharge = (100 * 3.65) + (100 * 5.25) + (200 * 7.15) + ((units - 400) * 7.80);
     }
 
-    // Duty charges 15% of energy charges
+    //Duty charges 15% of energy charges
     duty = energyCharge * 0.15; 
 
-    // Surcharges  Rs. 0.10 per unit
+    //Surcharges  Rs. 0.10 per unit
     surcharges = units * 0.10; 
 
-    // Sum of all components = Total bill 
+    //Sum of all components = Total bill 
     totalBill = energyCharge + fixedCharge + duty + surcharges ;
 
-    // Late payment fee 1.25% (if applicable)
-    if (latePayment == 1)
+    //Late payment fee 1.25% (if applicable)
+    if(latePayment == 1)
     totalBill += totalBill * 0.0125;
 
-    // Store all calculated components back in structure
+    //Store all calculated components back in structure
     c->energyCharge = energyCharge;
     c->fixedCharge = fixedCharge;
     c->duty = duty;
@@ -116,14 +114,13 @@ float calculateBill(float units, float load, int latePayment, Customer *c)
     return totalBill;
 }
 
-
-// Input new customer details and billing details
+//Input new customer details and billing details
 void addCustomer() 
 {
     Customer c;
     int latePayment;
 
-    if (count >= 100) // Check storage limit
+    if(count >= 100) //Check storage limit
     {
         printf("Adding customer unsuccessful. Customer limit reached.\n");
         return;
@@ -131,9 +128,9 @@ void addCustomer()
     
     printf("Enter Customer ID: ");
     scanf("%d", &c.id);
-    for(int i = 0; i < count; i++)
+    for(int i=0; i<count; i++)
     {   
-        // Duplicate ID check
+        //Duplicate ID check
         if(customers[i].id == c.id)
         {
             printf("Customer ID already exists.\n");
@@ -144,11 +141,11 @@ void addCustomer()
     printf("Enter Customer Name: ");
     getchar(); 
     fgets(c.name, sizeof(c.name), stdin);
-    c.name[strcspn(c.name,"\n")] = '\0';
+    c.name[strcspn(c.name,"\n")]='\0';
 
     printf("Enter Units Consumed: ");
     scanf("%f", &c.units);
-    if (c.units < 0) 
+    if(c.units < 0) 
     {
         printf("Invalid input. Units cannot be less than zero.\n");
         return;
@@ -156,7 +153,7 @@ void addCustomer()
 
     printf("Enter Load Capacity (in kW): ");
     scanf("%f", &c.load);
-    if (c.load <= 0) 
+    if(c.load <= 0) 
     {
         printf("Invalid input. Load capacity must be greater than zero.\n");
         return;
@@ -164,7 +161,7 @@ void addCustomer()
 
     printf("Is it late payment? (1=yes, 0=no): ");
     scanf("%d", &latePayment);
-    if (latePayment != 0 && latePayment != 1) 
+    if(latePayment != 0 && latePayment != 1) 
     {
         printf("Invalid input. Please enter 1(late payment) or not late(0).\n");
         return;
@@ -172,23 +169,24 @@ void addCustomer()
 
     calculateBill(c.units, c.load, latePayment, &c);
 
-    customers[count] = c; 
+    customers[count]=c; 
     count++;
+
+    saveToFile(); //Save input data to file
 
     printf("Customer added successfully.\n");
 }
 
-
 //Search customer records by ID
 void searchByID()
 {
-    int id, found=0;
+    int id, f=0;
     printf("Enter Customer ID to search: ");
     scanf("%d", &id);
     
     for(int i=0; i<count; i++)
     {
-        if (customers[i].id == id)
+        if(customers[i].id == id)
         {
             printf("\nCustomer Found:\n");
             printf("ID: %d\n", customers[i].id);
@@ -201,25 +199,24 @@ void searchByID()
         }
     }
 
-    if (found == 0)
+    if(f == 0)
     printf("Customer not found.\n");
 }
-
 
 //Search customer records by name 
 void searchByName()
 {
     char name[50];
-    int found = 0;
+    int f=0;
 
     printf("Enter Customer Name to search: ");
     getchar();
     fgets(name, sizeof(name), stdin);
-    name[strcspn(name, "\n")] = '\0';
+    name[strcspn(name, "\n")]='\0';
 
-    for (int i=0; i<count; i++)
+    for(int i=0; i<count; i++)
     {
-        if (strcmp(customers[i].name, name) == 0)
+        if(strcmp(customers[i].name, name) == 0)
         {
             printf("\nCustomer Found:\n");
             printf("ID: %d\n", customers[i].id);
@@ -228,23 +225,22 @@ void searchByName()
             printf("Load: %.2f kW\n", customers[i].load);
             printf("Total Bill: INR %.2f\n", customers[i].totalBill);
 
-            found=1;
+            f=1;
         }
     }
     
-    if (found == 0)
+    if(f == 0)
     printf("No customer found with the entered name.\n");
 }
-
 
 //Display formatted electricity bill
 void generateReceipt()
 {
-    int id, found = 0;
+    int id, f=0;
     printf("Enter Customer ID to generate receipt:\n");
     scanf("%d", &id);
 
-    for (int i = 0; i < count; i++)
+    for (int i=0; i<count; i++)
     {
         if (customers[i].id == id)
         {
