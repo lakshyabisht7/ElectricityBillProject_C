@@ -271,4 +271,13 @@ int main()
     loadFromFile(); // Load customer data from file
 
     int choice;
+    while(1)
+    {
+        printf("\nGo through the following menu:\n");
+        printf("1. Add New Customer\n");
+        printf("2. Generate Electricity Bill\n");
+        printf("3. Search customer records by ID\n");
+        printf("4. Search customer records by Name\n");
+        printf("5. Exit\n");
+    }
 }
