@@ -279,5 +279,37 @@ int main()
         printf("3. Search customer records by ID\n");
         printf("4. Search customer records by Name\n");
         printf("5. Exit\n");
+
+        printf("\nEnter your choice: ");
+        scanf("%d", &choice);
+
+        //switch case to call functions based on user's choice
+        switch(choice) 
+        {
+            case 1:
+                addCustomer();
+                break;
+
+            case 2:
+                generateReceipt();
+                break;
+
+            case 3:
+                searchByID();
+                break;
+
+            case 4:
+                searchByName();
+                break;
+
+            case 5:
+                printf("Exiting program...\n");
+                exit(0);
+
+            default:
+                printf("Invalid choice.\n");
+        }
     }
+
+    return 0;
 }
