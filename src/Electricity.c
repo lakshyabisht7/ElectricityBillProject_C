@@ -7,6 +7,7 @@ In this project, based on C programming Language, I am working on generating a r
 and all Other Charges applicable for Residential connection under UPCL in Dehradun, Uttarakhand. Apart from calculating slab-wise energy charges,
 the program also stores customer details, allows searching, and displays a formatted bill. File handling is used so that customer records 
 remain saved even after the program is closed and opened again. Basic search options (by ID and by name) are also provided for ease of usage.
+Concepts Used: Structures, File Handling, Functions, Pointers, Searching.
 
 */
 
@@ -114,7 +115,7 @@ float calculateBill(float units, float load, int latePayment, Customer *c)
     return totalBill;
 }
 
-//Input new customer details and billing details
+//Input new customer details with billing details
 void addCustomer() 
 {
     Customer c;
@@ -180,7 +181,7 @@ void addCustomer()
 //Search customer records by ID
 void searchByID()
 {
-    int id, f=0;
+    int id, found=0;
     printf("Enter Customer ID to search: ");
     scanf("%d", &id);
     
@@ -199,7 +200,7 @@ void searchByID()
         }
     }
 
-    if(f == 0)
+    if(found == 0)
     printf("Customer not found.\n");
 }
 
@@ -207,7 +208,7 @@ void searchByID()
 void searchByName()
 {
     char name[50];
-    int f=0;
+    int found=0;
 
     printf("Enter Customer Name to search: ");
     getchar();
@@ -225,18 +226,18 @@ void searchByName()
             printf("Load: %.2f kW\n", customers[i].load);
             printf("Total Bill: INR %.2f\n", customers[i].totalBill);
 
-            f=1;
+            found=1;
         }
     }
     
-    if(f == 0)
+    if(found == 0)
     printf("No customer found with the entered name.\n");
 }
 
 //Display formatted electricity bill
 void generateReceipt()
 {
-    int id, f=0;
+    int id, found=0;
     printf("Enter Customer ID to generate receipt:\n");
     scanf("%d", &id);
 
@@ -258,6 +259,7 @@ void generateReceipt()
             printf("---------------------------------------------\n");
             printf("TOTAL BILL    : INR %.2f\n", customers[i].totalBill);
             printf("---------------------------------------------\n");
+            printf("\nThank you for using UPCL billing system.\n");
 
             found=1;
             break;
