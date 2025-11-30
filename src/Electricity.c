@@ -15,30 +15,30 @@ Concepts Used: Structures, File Handling, Functions, Pointers, Searching.
 #include <stdlib.h>
 #include <string.h>
 
-//Structure to store customer details and bill components
+//Structure to store customer information
 typedef struct 
 {
     int id;
     char name[50];
     float units;
-    float load;
+    float load; //Connected load in kW
     float energyCharge;
     float fixedCharge;
-    float duty;
+    float duty; //Electricity duty
     float surcharge;
     float totalBill;
 } Customer;
 
-Customer customers[100]; 
+Customer customers[100]; //Array to store upto 100 customers
 int count=0;           
 
-//Save customer details and bill records to file
+//Function to save data to file
 void saveToFile()
 {
     FILE *fp=fopen("customers.dat","wb");
     if(fp == NULL)
     {
-        printf("Error while saving data.\n");
+        printf("Error: Cannot save file.\n");
         return;
     }
     fwrite(&count, sizeof(int), 1, fp);
@@ -62,7 +62,7 @@ void loadFromFile()
 }
 
 //Calculates bill breakdown and total bill
-float calculateBill(float units, float load, int latePayment, Customer *c) 
+void calculateBill(float units, float load, int latePayment, Customer *c) 
 {
     float energyCharge=0, totalBill=0, surcharges=0, fixedCharge=0, duty=0;
 
@@ -111,22 +111,22 @@ float calculateBill(float units, float load, int latePayment, Customer *c)
     c->duty = duty;
     c->surcharge = surcharges;
     c->totalBill = totalBill;
-
-    return totalBill;
 }
 
-//Input new customer details with billing details
+//Function to add a new customer
 void addCustomer() 
 {
-    Customer c;
+    struct Customer c;
     int latePayment;
 
     if(count >= 100) //Check storage limit
     {
-        printf("Adding customer unsuccessful. Customer limit reached.\n");
+        printf("Memory full! Cannot add more customers.\n");
         return;
     }
     
+    printf("\n ADD NEW CUSTOMER \n");
+
     printf("Enter Customer ID: ");
     scanf("%d", &c.id);
     for(int i=0; i<count; i++)
@@ -134,11 +134,11 @@ void addCustomer()
         //Duplicate ID check
         if(customers[i].id == c.id)
         {
-            printf("Customer ID already exists.\n");
+            printf("Error: Customer ID already exists.\n");
             return;
         }
     }
-    
+
     printf("Enter Customer Name: ");
     getchar(); 
     fgets(c.name, sizeof(c.name), stdin);
@@ -168,6 +168,7 @@ void addCustomer()
         return;
     }
 
+    //Calculate bill and save it to structure
     calculateBill(c.units, c.load, latePayment, &c);
 
     customers[count]=c; 
@@ -178,7 +179,7 @@ void addCustomer()
     printf("Customer added successfully.\n");
 }
 
-//Search customer records by ID
+//Function to search customer records by ID
 void searchByID()
 {
     int id, found=0;
@@ -204,7 +205,7 @@ void searchByID()
     printf("Customer not found.\n");
 }
 
-//Search customer records by name 
+//Function to search customer records by name 
 void searchByName()
 {
     char name[50];
@@ -263,11 +264,11 @@ void generateReceipt()
 
             found=1;
             break;
-
-            if(found == 0)
-            printf("Customer data not found\n");
         }
     }
+
+    if(found == 0)
+    printf("Customer data not found\n");
 }
 
 // Main menu for users to interact with available options 
@@ -287,6 +288,13 @@ int main()
 
         printf("\nPlease select an option: ");
         scanf("%d", &choice);
+        //If customer did not entered a number
+        if (scanf("%d", &choice) != 1)
+        {
+            printf("Invalid input. Please enter a number.\n");
+            while (getchar() != '\n'); 
+            continue; //Go back to the start of the while loop
+        }
 
         //switch case to call functions based on user's choice
         switch(choice) 
@@ -312,7 +320,7 @@ int main()
                 exit(0);
 
             default:
-                printf("Invalid choice.\n");
+                printf("Invalid choice...Try again\n");
         }
     }
 
