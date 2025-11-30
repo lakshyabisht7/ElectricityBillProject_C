@@ -259,10 +259,13 @@ void generateReceipt()
             printf("---------------------------------------------\n");
             printf("TOTAL BILL    : INR %.2f\n", customers[i].totalBill);
             printf("---------------------------------------------\n");
-            printf("\nThank you for using UPCL billing system.\n");
+            printf("\nThank you for using UPCL Billing System\n");
 
             found=1;
             break;
+
+            if(found == 0)
+            printf("Customer data not found\n");
         }
     }
 }
@@ -275,14 +278,14 @@ int main()
     int choice;
     while(1)
     {
-        printf("\nGo through the following menu:\n");
+        printf("\nELECTRICITY BILL SYSTEM MENU:\n");
         printf("1. Add New Customer\n");
         printf("2. Generate Electricity Bill\n");
         printf("3. Search customer records by ID\n");
         printf("4. Search customer records by Name\n");
         printf("5. Exit\n");
 
-        printf("\nEnter your choice: ");
+        printf("\nPlease select an option: ");
         scanf("%d", &choice);
 
         //switch case to call functions based on user's choice
