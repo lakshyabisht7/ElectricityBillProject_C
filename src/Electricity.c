@@ -116,7 +116,7 @@ void calculateBill(float units, float load, int latePayment, Customer *c)
 //Function to add a new customer
 void addCustomer() 
 {
-    struct Customer c;
+    Customer c;
     int latePayment;
     int tempChar;
 
@@ -212,17 +212,19 @@ void searchByID()
 //Function to search customer records by name 
 void searchByName()
 {
-    char name[50];
+    char searchName[50];
     int found=0;
+    int tempChar;
+
+    while ((tempChar=getchar()) != '\n' && tempChar != EOF);
 
     printf("Enter Customer Name to search: ");
-    getchar();
-    fgets(name, sizeof(name), stdin);
-    name[strcspn(name, "\n")]='\0';
+    fgets(searchName, sizeof(searchName), stdin);
+    searchName[strcspn(searchName, "\n")]='\0';
 
     for(int i=0; i<count; i++)
     {
-        if(strcmp(customers[i].name, name) == 0)
+        if(strcmp(customers[i].name, searchName) == 0)
         {
             printf("\nCustomer Found:\n");
             printf("ID: %d\n", customers[i].id);
