@@ -118,6 +118,7 @@ void addCustomer()
 {
     struct Customer c;
     int latePayment;
+    int tempChar;
 
     if(count >= 100) //Check storage limit
     {
@@ -139,9 +140,12 @@ void addCustomer()
         }
     }
 
+    //Clear the "Enter" key left by scanf so fgets works
+    while ((tempChar=getchar()) != '\n' && tempChar != EOF);
+
     printf("Enter Customer Name: ");
-    getchar(); 
     fgets(c.name, sizeof(c.name), stdin);
+    //Removes new line at the end of name
     c.name[strcspn(c.name,"\n")]='\0';
 
     printf("Enter Units Consumed: ");
@@ -287,11 +291,9 @@ int main()
         printf("5. Exit\n");
 
         printf("\nPlease select an option: ");
-        scanf("%d", &choice);
-        //If customer did not entered a number
-        if (scanf("%d", &choice) != 1)
+        if(scanf("%d", &choice) != 1) //If customer did not entered a number
         {
-            printf("Invalid input. Please enter a number.\n");
+            printf("Invalid input. Please enter number (1-5)\n");
             while (getchar() != '\n'); 
             continue; //Go back to the start of the while loop
         }
