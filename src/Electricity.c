@@ -68,26 +68,26 @@ void calculateBill(float units, float load, int latePayment, Customer *c)
 
     //Fixed charge based on load capacity
     if(load <= 1)
-    fixedCharge = 75.0 * load;
+    fixedCharge = 75.0 * load; //75/kW for upto 1kW
     else if(load <= 4)
-    fixedCharge = 85.0 * load; 
+    fixedCharge = 85.0 * load; //85/kW for upto 4kW
     else 
-    fixedCharge = 100 * load;
+    fixedCharge = 100 * load; //100/kW for greater than 4kW
 
     //Slab-wise energy charge calculation
-    if(units <= 100) 
+    if(units <= 100) //First 100 units @3.65/unit
     {
         energyCharge = units * 3.65;
     } 
-    else if(units <= 200) 
+    else if(units <= 200) //Next 100 units @5.25/unit, including fixed charge for first 100 units
     {
         energyCharge = (100 * 3.65) + ((units - 100) * 5.25);
     } 
-    else if(units <= 400) 
+    else if(units <= 400) //Next 200 units @7.15/unit, including fixed charges for first 200 units
     {
         energyCharge = (100 * 3.65) + (100 * 5.25) + ((units - 200) * 7.15);
     } 
-    else 
+    else //After 400 units @7.80/unit, including fixed charges for first 400 units
     {
         energyCharge = (100 * 3.65) + (100 * 5.25) + (200 * 7.15) + ((units - 400) * 7.80);
     }
@@ -277,10 +277,10 @@ void generateReceipt()
     printf("Customer data not found\n");
 }
 
-// Main menu for users to interact with available options 
+//Main menu for users to interact with available options 
 int main() 
 {
-    loadFromFile(); // Load customer data from file
+    loadFromFile(); //Load customer data from file
 
     int choice;
     while(1)
