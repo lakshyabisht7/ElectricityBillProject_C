@@ -245,7 +245,7 @@ void searchByName()
 void generateReceipt()
 {
     int id, found=0;
-    printf("Enter Customer ID to generate receipt:\n");
+    printf("Enter Customer ID to generate receipt: ");
     scanf("%d", &id);
 
     for (int i=0; i<count; i++)
@@ -258,7 +258,7 @@ void generateReceipt()
             printf("Customer Name : %s\n", customers[i].name);
             printf("Connected Load: %.2f kW\n", customers[i].load);
             printf("Units Consumed: %.2f units\n", customers[i].units);
-            printf("\n  Bill Breakdown\n");
+            printf("\n      Bill Breakdown\n");
             printf("Energy Charge : INR %.2f\n", customers[i].energyCharge);
             printf("Fixed Charge  : INR %.2f\n", customers[i].fixedCharge);
             printf("Duty (15%%)    : INR %.2f\n", customers[i].duty);
@@ -285,7 +285,7 @@ int main()
     int choice;
     while(1)
     {
-        printf("\nELECTRICITY BILL SYSTEM MENU:\n");
+        printf("\n\nELECTRICITY BILL SYSTEM MENU:\n");
         printf("1. Add New Customer\n");
         printf("2. Generate Electricity Bill\n");
         printf("3. Search customer records by ID\n");
