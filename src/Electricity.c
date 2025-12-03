@@ -7,7 +7,7 @@ In this project, based on C programming Language, I am working on generating a r
 and all Other Charges applicable for Residential connection under UPCL in Dehradun, Uttarakhand. Apart from calculating slab-wise energy charges,
 the program also stores customer details, allows searching, and displays a formatted bill. File handling is used so that customer records 
 remain saved even after the program is closed and opened again. Basic search options (by ID and by name) are also provided for ease of usage.
-Concepts Used: Structures, File Handling, Functions, Pointers, Searching.
+Concepts Used: Structures, File Handling, Dynamic Memory allocation, Functions, Pointers, Searching.
 
 */
 
@@ -29,12 +29,15 @@ typedef struct
     float totalBill;
 } Customer;
 
-Customer customers[100]; //Array to store upto 100 customers
+Customer *customers = NULL;
 int count=0;           
 
 //Function to save data to file
 void saveToFile()
 {
+    if(customers == NULL)
+    return;
+
     FILE *fp=fopen("customers.dat","wb");
     if(fp == NULL)
     {
@@ -52,10 +55,18 @@ void loadFromFile()
 {
     FILE *fp = fopen("customers.dat","rb");
     if(fp == NULL)
-    {
-        return;
-    }
+    return;
+
     fread(&count, sizeof(int), 1, fp);
+
+    customers = (Customer *)malloc(count * sizeof(Customer));
+    if (customers == NULL)
+    {
+        printf("Memory allocation failed\n");
+        fclose(fp);
+        exit(1);
+    }
+
     fread(customers, sizeof(Customer), count, fp);
 
     fclose(fp);
@@ -120,10 +131,11 @@ void addCustomer()
     int latePayment;
     int tempChar;
 
-    if(count >= 100) //Check storage limit
+    customers = (Customer *)realloc(customers, (count + 1) * sizeof(Customer));
+    if (customers == NULL)
     {
-        printf("Memory full! Cannot add more customers.\n");
-        return;
+        printf("Memory error\n");
+        exit(1);
     }
     
     printf("\n ADD NEW CUSTOMER \n");
@@ -320,6 +332,8 @@ int main()
                 break;
 
             case 5:
+                saveToFile();
+                free(customers);
                 printf("Exiting program...\n");
                 exit(0);
 
