@@ -38,14 +38,15 @@ void saveToFile()
     if(customers == NULL)
     return;
 
+    //Binary file used for efficient data storage
     FILE *fp=fopen("customers.dat","wb");
     if(fp == NULL)
     {
         printf("Error: Cannot save file.\n");
         return;
     }
-    fwrite(&count, sizeof(int), 1, fp);
-    fwrite(customers, sizeof(Customer), count, fp);
+    fwrite(&count,sizeof(int),1,fp);
+    fwrite(customers,sizeof(Customer),count,fp);
 
     fclose(fp);
 }
@@ -53,11 +54,23 @@ void saveToFile()
 // Load data from file when program starts
 void loadFromFile()
 {
-    FILE *fp = fopen("customers.dat","rb");
+    //Binary file used for faster data read
+    FILE *fp=fopen("customers.dat","rb");
     if(fp == NULL)
-    return;
+    {
+        printf("Cannot open file\n");
+        return;
+    }
 
-    fread(&count, sizeof(int), 1, fp);
+    fread(&count,sizeof(int),1,fp);
+
+    //Prevents malloc usage for empty file
+    if(count == 0)
+    {
+        customers=NULL;
+        fclose(fp);
+        return;
+    }
 
     customers = (Customer *)malloc(count * sizeof(Customer));
     if (customers == NULL)
@@ -67,8 +80,7 @@ void loadFromFile()
         exit(1);
     }
 
-    fread(customers, sizeof(Customer), count, fp);
-
+    fread(customers,sizeof(Customer),count,fp);
     fclose(fp);
 }
 
@@ -129,9 +141,9 @@ void addCustomer()
 {
     Customer c;
     int latePayment;
-    int tempChar;
+    int tempCh;
 
-    customers = (Customer *)realloc(customers, (count + 1) * sizeof(Customer));
+    customers = (Customer *)realloc(customers,(count+1) * sizeof(Customer));
     if (customers == NULL)
     {
         printf("Memory error\n");
@@ -153,7 +165,7 @@ void addCustomer()
     }
 
     //Clear the "Enter" key left by scanf so fgets works
-    while ((tempChar=getchar()) != '\n' && tempChar != EOF);
+    while ((tempCh=getchar()) != '\n' && tempCh != EOF);
 
     printf("Enter Customer Name: ");
     fgets(c.name, sizeof(c.name), stdin);
@@ -198,6 +210,12 @@ void addCustomer()
 //Function to search customer records by ID
 void searchByID()
 {
+    if(customers == NULL || count == 0)
+    {
+        printf("No records available\n");
+        return;
+    }
+    
     int id, found=0;
     printf("Enter Customer ID to search: ");
     scanf("%d", &id);
@@ -224,11 +242,17 @@ void searchByID()
 //Function to search customer records by name 
 void searchByName()
 {
+    if(customers == NULL || count == 0)
+    {
+        printf("No records available\n");
+        return;
+    }
+    
     char searchName[50];
     int found=0;
-    int tempChar;
+    int tempCh;
 
-    while ((tempChar=getchar()) != '\n' && tempChar != EOF);
+    while ((tempCh=getchar()) != '\n' && tempCh != EOF);
 
     printf("Enter Customer Name to search: ");
     fgets(searchName, sizeof(searchName), stdin);
@@ -256,6 +280,12 @@ void searchByName()
 //Display formatted electricity bill
 void generateReceipt()
 {
+    if(customers == NULL || count == 0)
+    {
+        printf("No records available\n");
+        return;
+    }
+    
     int id, found=0;
     printf("Enter Customer ID to generate receipt: ");
     scanf("%d", &id);
