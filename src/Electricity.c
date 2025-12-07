@@ -30,7 +30,7 @@ typedef struct
 } Customer;
 
 Customer *customers = NULL;
-int count=0;           
+int count = 0;           
 
 //Function to save data to file
 void saveToFile()
@@ -39,14 +39,14 @@ void saveToFile()
     return;
 
     //Binary file used for efficient data storage
-    FILE *fp=fopen("customers.dat","wb");
+    FILE *fp = fopen("customers.dat", "wb");
     if(fp == NULL)
     {
         printf("Error: Cannot save file.\n");
         return;
     }
-    fwrite(&count,sizeof(int),1,fp);
-    fwrite(customers,sizeof(Customer),count,fp);
+    fwrite(&count, sizeof(int), 1,fp);
+    fwrite(customers, sizeof(Customer), count, fp);
 
     fclose(fp);
 }
@@ -55,39 +55,39 @@ void saveToFile()
 void loadFromFile()
 {
     //Binary file used for faster data read
-    FILE *fp=fopen("customers.dat","rb");
+    FILE *fp = fopen("customers.dat", "rb");
     if(fp == NULL)
     {
         printf("Cannot open file\n");
         return;
     }
 
-    fread(&count,sizeof(int),1,fp);
+    fread(&count, sizeof(int), 1, fp);
 
     //Prevents malloc usage for empty file
     if(count == 0)
     {
-        customers=NULL;
+        customers = NULL;
         fclose(fp);
         return;
     }
 
-    customers = (Customer *)malloc(count * sizeof(Customer));
-    if (customers == NULL)
+    customers = (Customer *) malloc (count * sizeof(Customer));
+    if(customers == NULL)
     {
         printf("Memory allocation failed\n");
         fclose(fp);
         exit(1);
     }
 
-    fread(customers,sizeof(Customer),count,fp);
+    fread(customers, sizeof(Customer), count, fp);
     fclose(fp);
 }
 
 //Calculates bill breakdown and total bill
 void calculateBill(float units, float load, int latePayment, Customer *c) 
 {
-    float energyCharge=0, totalBill=0, surcharges=0, fixedCharge=0, duty=0;
+    float energyCharge = 0, totalBill = 0, surcharges = 0, fixedCharge = 0, duty = 0;
 
     //Fixed charge based on load capacity
     if(load <= 1)
@@ -143,8 +143,8 @@ void addCustomer()
     int latePayment;
     int tempCh;
 
-    customers = (Customer *)realloc(customers,(count+1) * sizeof(Customer));
-    if (customers == NULL)
+    customers = (Customer *) realloc (customers, (count+1) * sizeof(Customer));
+    if(customers == NULL)
     {
         printf("Memory error\n");
         exit(1);
@@ -165,12 +165,12 @@ void addCustomer()
     }
 
     //Clear the "Enter" key left by scanf so fgets works
-    while ((tempCh=getchar()) != '\n' && tempCh != EOF);
+    while((tempCh = getchar()) != '\n' && tempCh != EOF);
 
     printf("Enter Customer Name: ");
     fgets(c.name, sizeof(c.name), stdin);
     //Removes new line at the end of name
-    c.name[strcspn(c.name,"\n")]='\0';
+    c.name[strcspn(c.name,"\n")] = '\0';
 
     printf("Enter Units Consumed: ");
     scanf("%f", &c.units);
@@ -199,7 +199,7 @@ void addCustomer()
     //Calculate bill and save it to structure
     calculateBill(c.units, c.load, latePayment, &c);
 
-    customers[count]=c; 
+    customers[count] = c; 
     count++;
 
     saveToFile(); //Save input data to file
@@ -216,7 +216,7 @@ void searchByID()
         return;
     }
     
-    int id, found=0;
+    int id, found = 0;
     printf("Enter Customer ID to search: ");
     scanf("%d", &id);
     
@@ -230,7 +230,7 @@ void searchByID()
             printf("Units: %.2f\n", customers[i].units);
             printf("Load: %.2f kW\n", customers[i].load);
             printf("Total Bill: INR %.2f\n", customers[i].totalBill);
-            found=1;
+            found = 1;
             break;
         }
     }
@@ -249,14 +249,14 @@ void searchByName()
     }
     
     char searchName[50];
-    int found=0;
+    int found = 0;
     int tempCh;
 
-    while ((tempCh=getchar()) != '\n' && tempCh != EOF);
+    while ((tempCh = getchar()) != '\n' && tempCh != EOF);
 
     printf("Enter Customer Name to search: ");
     fgets(searchName, sizeof(searchName), stdin);
-    searchName[strcspn(searchName, "\n")]='\0';
+    searchName[strcspn(searchName, "\n")] = '\0';
 
     for(int i=0; i<count; i++)
     {
@@ -269,7 +269,7 @@ void searchByName()
             printf("Load: %.2f kW\n", customers[i].load);
             printf("Total Bill: INR %.2f\n", customers[i].totalBill);
 
-            found=1;
+            found = 1;
         }
     }
     
@@ -286,13 +286,13 @@ void generateReceipt()
         return;
     }
     
-    int id, found=0;
+    int id, found = 0;
     printf("Enter Customer ID to generate receipt: ");
     scanf("%d", &id);
 
-    for (int i=0; i<count; i++)
+    for(int i=0; i<count; i++)
     {
-        if (customers[i].id == id)
+        if(customers[i].id == id)
         {
             printf("---------------------------------------------\n");
             printf("  UTTARAKHAND POWER CORPORATION LTD. (UPCL) \n\n");
@@ -310,7 +310,7 @@ void generateReceipt()
             printf("---------------------------------------------\n");
             printf("\nThank you for using UPCL Billing System\n");
 
-            found=1;
+            found = 1;
             break;
         }
     }
